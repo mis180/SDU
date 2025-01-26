@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Find Your Number For Into to GIS Assignments</title>
+</head>
+<body>
+  <h1>Find Your Number</h1>
+  <label for="studentId">Enter your ID, email, or name: </label>
+  <input type="text" id="studentId" />
+  <button onclick="lookupNumber()">Check</button>
+  <p id="result"></p>
+
+  <script>
+    // Our data array: each object holds ID, email, full name, and number
+    const data = [
+      { id: "210103002", email: "210103002@stu.sdu.edu.kz", name: "Madi Sabyrkul", number: "36" },
+      { id: "210103141", email: "210103141@stu.sdu.edu.kz", name: "Milana Kulimzhayeva", number: "25" },
+      { id: "210103163", email: "210103163@stu.sdu.edu.kz", name: "Maxim Kim", number: "23" },
+      { id: "210103207", email: "210103207@stu.sdu.edu.kz", name: "Batyikhan Ismamutov", number: "18" },
+      { id: "210103244", email: "210103244@stu.sdu.edu.kz", name: "Nurtileu Paizkhan", number: "34" },
+      { id: "210103276", email: "210103276@stu.sdu.edu.kz", name: "Shuak Orymbay", number: "33" },
+      { id: "210103284", email: "210103284@stu.sdu.edu.kz", name: "Dulat Abay", number: "1" },
+      { id: "210103316", email: "210103316@stu.sdu.edu.kz", name: "Ayan Alimov", number: "6" },
+      { id: "210103387", email: "210103387@stu.sdu.edu.kz", name: "Rakhman Aidaruly", number: "2" },
+      { id: "220103005", email: "220103005@stu.sdu.edu.kz", name: "Zhanali Kopzhasarov", number: "24" },
+      { id: "220103033", email: "220103033@stu.sdu.edu.kz", name: "Olzhas Mussakhanuly", number: "28" },
+      { id: "220103035", email: "220103035@stu.sdu.edu.kz", name: "Kazbek Askarov", number: "9" },
+      { id: "220103037", email: "220103037@stu.sdu.edu.kz", name: "Bakdaulet Zhumabekov", number: "49" },
+      { id: "220103039", email: "220103039@stu.sdu.edu.kz", name: "Baglan Zhassanov", number: "45" },
+      { id: "220103045", email: "220103045@stu.sdu.edu.kz", name: "Meiirbek Myngzhassar", number: "29" },
+      { id: "220103067", email: "220103067@stu.sdu.edu.kz", name: "Almat Zhuban", number: "48" },
+      { id: "220103077", email: "220103077@stu.sdu.edu.kz", name: "Duman Rakhmatulla", number: "35" },
+      { id: "220103147", email: "220103147@stu.sdu.edu.kz", name: "Aruzhan Akbura", number: "4" },
+      { id: "220103164", email: "220103164@stu.sdu.edu.kz", name: "Yerassyl Issayev", number: "19" },
+      { id: "220103165", email: "220103165@stu.sdu.edu.kz", name: "Nursultan Alenov", number: "5" },
+      { id: "220103169", email: "220103169@stu.sdu.edu.kz", name: "Yelnur Seitzhappar", number: "38" },
+      { id: "220103181", email: "220103181@stu.sdu.edu.kz", name: "Assylzhan Bitore", number: "13" },
+      { id: "220103215", email: "220103215@stu.sdu.edu.kz", name: "Mukhit Yessenin", number: "43" },
+      { id: "220103221", email: "220103221@stu.sdu.edu.kz", name: "Akylbek Zhokenov", number: "47" },
+      { id: "220103225", email: "220103225@stu.sdu.edu.kz", name: "Meruyet Salizhanova", number: "37" },
+      { id: "220103245", email: "220103245@stu.sdu.edu.kz", name: "Zanggar Kengesbek", number: "21" },
+      { id: "220103248", email: "220103248@stu.sdu.edu.kz", name: "Yerdaulet Nurym", number: "32" },
+      { id: "220103253", email: "220103253@stu.sdu.edu.kz", name: "Yersultan Assan", number: "10" },
+      { id: "220103264", email: "220103264@stu.sdu.edu.kz", name: "Nurbakh Ismailov", number: "17" },
+      { id: "220103269", email: "220103269@stu.sdu.edu.kz", name: "Azamat Uzakbayev", number: "41" },
+      { id: "220103278", email: "220103278@stu.sdu.edu.kz", name: "Damir Turgambekov", number: "40" },
+      { id: "220103282", email: "220103282@stu.sdu.edu.kz", name: "Arman Kantore", number: "20" },
+      { id: "220103289", email: "220103289@stu.sdu.edu.kz", name: "Aibatyr Khassenov", number: "22" },
+      { id: "220103312", email: "220103312@stu.sdu.edu.kz", name: "Sanzhar Nurlykhanuly", number: "31" },
+      { id: "220103313", email: "220103313@stu.sdu.edu.kz", name: "Gulnaz Amirkhan", number: "7" },
+      { id: "220103315", email: "220103315@stu.sdu.edu.kz", name: "Abylay Batyrkhanuly", number: "11" },
+      { id: "220103325", email: "220103325@stu.sdu.edu.kz", name: "Alisher Gilmanov", number: "15" },
+      { id: "220103327", email: "220103327@stu.sdu.edu.kz", name: "Dimash Yeskendir", number: "42" },
+      { id: "220103333", email: "220103333@stu.sdu.edu.kz", name: "Diyar Zhangirov", number: "44" },
+      { id: "220103347", email: "220103347@stu.sdu.edu.kz", name: "Sanzhar Shulenbayev", number: "39" },
+      { id: "220103348", email: "220103348@stu.sdu.edu.kz", name: "Shynggys Lesbayev", number: "26" },
+      { id: "220103349", email: "220103349@stu.sdu.edu.kz", name: "Aziza Nazarbayeva", number: "30" },
+      { id: "220103352", email: "220103352@stu.sdu.edu.kz", name: "Baubek Aizharykov", number: "3" },
+      { id: "220103355", email: "220103355@stu.sdu.edu.kz", name: "Akaru Islambek", number: "16" },
+      { id: "220103363", email: "220103363@stu.sdu.edu.kz", name: "Bekzat Moldabek", number: "27" },
+      { id: "220103365", email: "220103365@stu.sdu.edu.kz", name: "Alizhan Daniyarov", number: "14" },
+      { id: "220103381", email: "220103381@stu.sdu.edu.kz", name: "Akadil Zhengissuly", number: "46" },
+      { id: "220103394", email: "220103394@stu.sdu.edu.kz", name: "Zere Artykbek", number: "8" },
+      { id: "220103399", email: "220103399@stu.sdu.edu.kz", name: "Mukhtar Zhussupali", number: "50" },
+      { id: "220103400", email: "220103400@stu.sdu.edu.kz", name: "Altynai Beketova", number: "12" }
+    ];
+
+    function lookupNumber() {
+      const userInput = document
+        .getElementById("studentId")
+        .value
+        .trim()
+        .toLowerCase();
+
+      // Look for a record where:
+      //  - The ID matches exactly,
+      //  - OR the email matches exactly,
+      //  - OR the name *contains* the search string (case-insensitive).
+      //
+      // If you want name to match exactly as well, replace ".includes(...)" with "=== userInput".
+      const record = data.find(item =>
+        item.id.toLowerCase() === userInput ||
+        item.email.toLowerCase() === userInput ||
+        item.name.toLowerCase().includes(userInput)
+      );
+
+      if (record) {
+        document.getElementById("result").innerText =
+          `Hello ${record.name}, your number is: ${record.number}`;
+      } else {
+        document.getElementById("result").innerText =
+          "No match found. Please check your input.";
+      }
+    }
+  </script>
+</body>
+</html>
